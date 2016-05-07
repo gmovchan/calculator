@@ -1,0 +1,169 @@
+.window {
+  border: 1px solid #18A0BF;
+  display: inline-block;
+  background-color: #F2F2F2;
+  font-family: Segoe UI, sans-serif;
+  cursor: default;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+#close {
+  margin: 0 -5px;
+}
+
+#close:hover {
+  background: #E81123;
+  color: white;
+  padding: 0;
+}
+
+#expand:hover {
+  background: #19A3C2;
+  color: white;
+}
+
+#turn:hover {
+  background: #19A3C2;
+  color: white;
+}
+
+#close:active {
+  background: #F1707A;
+  color: white;
+  padding: 0;
+}
+
+#expand:active {
+  background: #33ADC9;
+  color: white;
+}
+
+#turn:active {
+  background: #33ADC9;
+  color: white;
+}
+
+#turn {
+  font-weight: bold;
+}
+
+#menu {
+  font-size: xx-large;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  display: inline-block;
+  vertical-align: middle;
+
+}
+
+.type {
+  font-size: medium;
+  font-weight: bold;
+  margin: 0 10px;
+  height: 50px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.type:before { /* для IE8+ */
+  content: "";
+  display: inline-block;
+  min-height: inherit;
+  height: 100%;
+  vertical-align: middle;
+}
+
+
+#menu:hover {
+ background-color: #DADADA;
+}
+
+#menu:active {
+  background-color: #B8B8B8;
+}
+
+.windowControl {
+  float: right;
+  width: 30px;
+  height: 20px;
+  text-align: center;
+  font-size: medium;
+  line-height: 20px;
+}
+.windowControl:hover {
+  background-color: #CFCFCF;
+}
+
+#answer {
+  font-size: xx-large;
+  float: right;
+  margin: 10px;
+  clear: right;
+  font-weight: bold;
+}
+
+#solveString {
+  color: gray;
+  float: right;
+  margin: 0 10px;
+  height: 21px;
+}
+
+.numbers {
+  font-weight: bold;
+
+}
+
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+
+}
+
+.row DIV {
+  float: left;
+  width: 80px;
+  height: 50px;
+  text-align: center;
+  background-color: #E6E6E6;
+  line-height: 50px;
+  font-size: large;
+}
+
+.row DIV:hover {
+  background-color: #CFCFCF;
+}
+
+.row DIV:active {
+  background-color: #B8B8B8;
+}
+
+.row {
+  clear: left;
+  float: left;
+}
+
+.historyMemory {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.border {
+  border: 1px solid red;
+}
+
+.buttons {
+  display: inline-block;
+}
+
+.windowName {
+  font-size: small;
+  line-height: 20px;
+  margin: 0 5px
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="window clearfix">
+      <div class="windowName">Calculator <span class="windowControl"
+        id="close">⨯</span>
+        <span class="windowControl" id="expand">🗖</span><span class="windowControl"
+         id="turn">−</span>
+      </div>
+      <div class="buttons clearfix">
+        <div>
+            <div id="menu">≡</div><div class="type">STANDART</div>
+        </div>
+        <div id="solveString"></div>
+        <div id="answer">0</div>
+        <br>
+        <div class="row">
+          <div id="ce" strings-operator="ce">CE</div>
+          <div id="c" strings-operator="c">C</div>
+          <div id="backspace" strings-operator="backspace">←</div>
+          <div id="division" data-operator="division">÷</div>
+        </div>
+        <div class="row">
+          <div class="numbers" id="7">7</div>
+          <div class="numbers" id="8">8</div>
+          <div class="numbers" id="9">9</div>
+          <div data-operator="multiplication" id="multiplication">⨯</div>
+        </div>
+        <div class="row">
+          <div class="numbers" id="4">4</div>
+          <div class="numbers" id="5">5</div>
+          <div class="numbers" id="6">6</div>
+          <div data-operator="minus" id="minus">−</div>
+        </div>
+        <div class="row">
+          <div class="numbers" id="1">1</div>
+          <div class="numbers" id="2">2</div>
+          <div class="numbers" id="3">3</div>
+          <div data-operator="plus" id="plus">+</div>
+        </div>
+        <div class="row">
+          <div strings-operator="plusMinus" id="plusMinus">±</div>
+          <div class="numbers" id="0">0</div>
+          <div strings-operator="point" id="point">.</div>
+          <div data-operator="equal" id="equal">=</div>
+        </div>
+
+      </div>
+<!--      <div class="historyMemory">
+        There nothing saved in memory
+      </div>
+-->
+    </div>
+
+  </body>
+  <script src="script.js"></script>
+</html>
