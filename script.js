@@ -3,6 +3,9 @@ var x = y = activeOperator = null,
     shiftOperator = false,
     divideByZero = "can't  divide by zero",
     limitText = "Limit is exceeded",
+    historyArr = [],
+    historyList = document.getElementById("historyList"),
+    callEqual = false;
     operatorsList = {
       multiplication: function (x, y) {
         return x * y;
@@ -55,6 +58,7 @@ var x = y = activeOperator = null,
 
       equal: function (dataOperator, nextDataOperator) {
 
+
         if (dataOperator && nextDataOperator) {
 
           if (x != null) {
@@ -72,12 +76,14 @@ var x = y = activeOperator = null,
         }
 
         if (x != null) {
-          if (solveString.innerHTML) {
+          if (solveString.innerHTML && y == null) {
             y = parseFloat(answer.innerHTML);
           }
         } else {
          return false;
         }
+
+        callEqual = false;
 
         sortingObj.dataOperator(dataOperator, x, y);
 
@@ -142,6 +148,12 @@ var x = y = activeOperator = null,
 
 
           answer.innerHTML = answerNumber;
+
+          if (!callEqual) {
+            createHistoryElem();
+            callEqual = false;
+          }
+
 
           x = parseFloat(answerNumber);
         }
@@ -232,6 +244,31 @@ var x = y = activeOperator = null,
       },
     };
 
+    function createHistoryElem() {
+      var historyElem = {
+        x: x,
+        y: y,
+        activeOperator: activeOperator,
+        solve: x + " " + document.getElementById(activeOperator).innerHTML + " " + y,
+        answer: answer.innerHTML
+      }
+
+      historyArr.push(historyElem);
+
+      var div = document.createElement("div");
+      div.setAttribute("data-id", historyArr.length - 1)
+      div.classList.add("historyElem", "clearfix");
+      var spanSolve = document.createElement("span");
+      spanSolve.classList.add("solveString");
+      spanSolve.innerHTML = historyElem.solve;
+      var spanAnswer = document.createElement("span");
+      spanAnswer.classList.add("answer");
+      spanAnswer.innerHTML = historyElem.answer;
+      div.appendChild(spanSolve);
+      div.appendChild(spanAnswer);
+      historyList.insertBefore(div, historyList.firstChild);
+    }
+
     function float(answer, x, y) {
       var count = yLength = xLength = 0;
 
@@ -310,6 +347,38 @@ function animationButton(id) {
 window.onclick = function (e) {
   var target = e.target;
 
+  if (target.classList.contains("historyElem")) {
+
+    nextActivOperator = delCount = null;
+    shiftOperator = false;
+
+    var obj = historyArr[target.getAttribute("data-id")];
+
+    x = obj.x;
+    y = obj.y;
+    activeOperator = obj.activeOperator;
+    solveString.innerHTML = obj.solve;
+    answer.innerHTML = obj.answer;
+
+    return false;
+  }
+
+  if (target == delHistoryButton) {
+    historyList.innerHTML = "";
+    historyArr = [];
+    return false;
+  }
+
+  if (target.getAttribute("id") == "historyButton") {
+    if (historyList.style.display) {
+      historyList.style.display = "";
+      delHistory.style.display = "";
+    } else {
+      historyList.style.display = "block";
+      delHistory.style.display ="block";
+    }
+  }
+
   if (target.className == "numbers") {
 
     if (shiftOperator) {
@@ -337,19 +406,27 @@ window.onclick = function (e) {
 
       if (target.getAttribute("data-operator") != "equal") {
 
+        if (isNaN(solveString.innerHTML.charAt(solveString.innerHTML.length - 1)) &&
+        solveString.innerHTML.charAt(solveString.innerHTML.length - 1) != target.innerHTML) {
+          solveString.innerHTML = solveString.innerHTML.substring(0, solveString.
+            innerHTML.length - 1);
+          addSolveString(target.innerHTML)
+          activeOperator = target.getAttribute("data-operator");
+          return false;
+        }
+
         if (activeOperator && solveString.innerHTML) {
           var nextActivOperator = target.getAttribute("data-operator");
+          callEqual = true;
           operatorsList.equal(activeOperator, nextActivOperator);
           addSolveString(" " + target.innerHTML)
           shiftOperator = true;
           return false;
         }
 
-        if (!nextActivOperator) {
-          x = parseFloat(answer.innerHTML);
-          addSolveString(" " + answer.innerHTML + " " + target.innerHTML);
-          activeOperator = target.getAttribute("data-operator");
-        }
+        x = parseFloat(answer.innerHTML);
+        addSolveString(" " + answer.innerHTML + " " + target.innerHTML);
+        activeOperator = target.getAttribute("data-operator");
 
       }
 

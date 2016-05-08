@@ -50,14 +50,66 @@
   font-weight: bold;
 }
 
+.historyButton {
+  font-size: large;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  display: table-cell;
+  line-height: 50px;
+  float: right;
+}
+
+#delHistoryButton.historyButton {
+  font-size: xx-large;
+  line-height: 35px;
+}
+
+#delHistoryButton.historyButton:hover {
+  background-color: #C6C6C6;
+}
+
+#delHistoryButton.historyButton:active {
+  background-color: #B0B0B0;
+}
+
+.historyButton:hover {
+ background-color: #DADADA;
+}
+
+.historyButton:active {
+  background-color: #B8B8B8;
+}
+
 #menu {
   font-size: xx-large;
   width: 50px;
   height: 50px;
   text-align: center;
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: bottom;
+  z-index: 999;
+}
 
+#historyList {
+  width: 320px;
+  height: 200px;
+  position: absolute;
+  background-color: #DCDCDC;
+  bottom: 50px;
+  display: none;
+  overflow: auto;
+}
+
+#delHistory {
+  width: 320px;
+  height: 50px;
+  position: absolute;
+  background-color: #DCDCDC;
+  bottom: 0;
+  vertical-align: bottom;
+  display: none;
+  overflow: auto;
 }
 
 .type {
@@ -86,6 +138,18 @@
   background-color: #B8B8B8;
 }
 
+.historyElem {
+  margin: 10px 0 10px 0;
+}
+
+.historyElem:hover {
+  background-color: #C6C6C6;
+}
+
+.historyElem:active {
+  background-color: #B0B0B0;
+}
+
 .windowControl {
   float: right;
   width: 30px;
@@ -98,7 +162,7 @@
   background-color: #CFCFCF;
 }
 
-#answer {
+.answer {
   font-size: xx-large;
   float: right;
   margin: 10px;
@@ -106,16 +170,26 @@
   font-weight: bold;
 }
 
-#solveString {
+span.answer {
+  font-size: x-large;
+  margin: 0 10px 10px;
+  font-size: large;
+}
+
+.solveString {
   color: gray;
   float: right;
   margin: 0 10px;
   height: 21px;
 }
 
+span.solveString {
+  margin: 10px 10px 0;
+  font-size: small;
+}
+
 .numbers {
   font-weight: bold;
-
 }
 
 .clearfix:after {
@@ -160,6 +234,7 @@
 
 .buttons {
   display: inline-block;
+  position: relative;
 }
 
 .windowName {
