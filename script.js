@@ -120,7 +120,10 @@ var x = y = activeOperator = null,
       dataOperator: function (name, x1, y1) {
         if (typeof operatorsList[name] === "function") {
 
-          addSolveString(" " + y1);
+          if (solveString.innerHTML) {
+            addSolveString(" " + y1);
+          }
+
 
           var answerNumber = operatorsList[name](x1, y1);
 
@@ -145,15 +148,12 @@ var x = y = activeOperator = null,
             answerNumber = limitText;
           }
 
-
-
           answer.innerHTML = answerNumber;
 
           if (!callEqual) {
             createHistoryElem();
             callEqual = false;
           }
-
 
           x = parseFloat(answerNumber);
         }
@@ -245,11 +245,21 @@ var x = y = activeOperator = null,
     };
 
     function createHistoryElem() {
+      var text;
+
+      console.log(solveString.innerHTML)
+
+      if (solveString.innerHTML) {
+        text = solveString.innerHTML;
+      } else {
+        text = x + " " + document.getElementById(activeOperator).innerHTML + " " + y;
+      }
+
       var historyElem = {
         x: x,
         y: y,
         activeOperator: activeOperator,
-        solve: x + " " + document.getElementById(activeOperator).innerHTML + " " + y,
+        solve: text,
         answer: answer.innerHTML
       }
 
