@@ -295,6 +295,18 @@ span.solveString {
   border-top: 1px solid #DADADA;
 }
 
+.addytionallyButtonNotActive DIV{
+  float: left;
+  width: 80px;
+  height: 50px;
+  text-align: center;
+  background-color: #F2F2F2;
+  line-height: 50px;
+  font-size: large;
+  border-top: 1px solid #DADADA;
+  color: #C2C2C2;
+}
+
 .addytionallyButton DIV:hover {
   background-color: #CFCFCF;
 }
@@ -315,7 +327,7 @@ span.solveString {
   height: 10px
 }
 
-.memoryButton DIV {
+.memoryButtonDIV {
   float: left;
   width: 16.66%;
   height: 25px;
@@ -325,11 +337,26 @@ span.solveString {
   font-size: small;
 }
 
-.memoryButton DIV:hover {
+.memoryButtonNotActive {
+  float: left;
+  width: 16.66%;
+  height: 25px;
+  text-align: center;
+  background-color: #F2F2F2;
+  line-height: 25px;
+  font-size: small;
+  color: #C2C2C2;
+}
+
+.memoryButtonNotActive:hover {
+  background-color: #F2F2F2;
+}
+
+.memoryButtonDIV:hover {
   background-color: #CFCFCF;
 }
 
-.memoryButton DIV:active {
+.memoryButtonDIV:active {
   background-color: #B8B8B8;
 }
 

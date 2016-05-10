@@ -156,6 +156,13 @@ var x = y = activeOperator = null,
 
         function mce() {
           div.remove();
+
+          if (!memoryList.querySelector(".memoryText") && !memoryList.
+          querySelector(".memoryElem")) {
+            memoryList.innerHTML = '<div class="memoryText">There\'s no history yet</div>';
+          }
+
+          memoryButtonNotActive();
         }
 
         for (var i = 0; i < buttons.length; i++) {
@@ -177,10 +184,14 @@ var x = y = activeOperator = null,
         mr = mr + parseFloat(answer.innerHTML);
 
         shiftOperator = true;
+
+        memoryButtonNotActive();
       },
       mc: function () {
         memoryList.innerHTML = '<div class="memoryText">There\'s no history yet</div>';
         mr = 0;
+
+        memoryButtonNotActive();
       },
       mr: function () {
         answer.innerHTML = mr;
@@ -479,6 +490,8 @@ window.onclick = function (e) {
     solveString.innerHTML = obj.solve;
     answer.innerHTML = obj.answer;
 
+    historyOpenClose();
+
     return false;
   }
 
@@ -499,23 +512,12 @@ window.onclick = function (e) {
   }
 
   if (target.getAttribute("id") == "historyButton") {
-    if (historyList.style.display) {
-      historyList.style.display = "";
-      delHistory.style.display = "";
-    } else {
-      historyList.style.display = "block";
-      delHistory.style.display ="block";
-    }
+    historyOpenClose();
   }
 
   if (target.getAttribute("id") == "openMemory") {
-    if (memoryList.style.display) {
-      memoryList.style.display = "";
-      delMemory.style.display = "";
-    } else {
-      memoryList.style.display = "block";
-      delMemory.style.display ="block";
-    }
+    memoryOpenClose()
+    memoryButtonNotActive();
   }
 
   if (target.className == "numbers") {
@@ -549,7 +551,7 @@ window.onclick = function (e) {
         solveString.innerHTML.charAt(solveString.innerHTML.length - 1) != target.innerHTML) {
           solveString.innerHTML = solveString.innerHTML.substring(0, solveString.
             innerHTML.length - 1);
-          addSolveString(target.innerHTML)
+          addSolveString(target.innerHTML);
           activeOperator = target.getAttribute("data-operator");
           return false;
         }
@@ -558,7 +560,7 @@ window.onclick = function (e) {
           var nextActivOperator = target.getAttribute("data-operator");
           callEqual = true;
           operatorsList.equal(activeOperator, nextActivOperator);
-          addSolveString(" " + target.innerHTML)
+          addSolveString(" " + target.innerHTML);
           shiftOperator = true;
           return false;
         }
@@ -585,3 +587,50 @@ window.onclick = function (e) {
 window.onkeydown = function (e) {
   sortingObj.keyPress(e.keyCode);
 };
+
+var addytionallyButtons = document.querySelector(".addytionallyButton");
+addytionallyButtons.className = "addytionallyButtonNotActive";
+
+var memoryButtons = document.getElementsByClassName("memoryButton")[0];
+
+function memoryButtonNotActive() {
+  if(memoryList.querySelector(".memoryText")) {
+    memoryButtons.children[0].className = "memoryButtonNotActive";
+    memoryButtons.children[1].className = "memoryButtonNotActive";
+  } else {
+    memoryButtons.children[0].className = "memoryButtonDIV";
+    memoryButtons.children[1].className = "memoryButtonDIV";
+  }
+
+  if (memoryList.style.display == "block") {
+    for (var i = 0; i < memoryButtons.children.length - 1; i++) {
+      memoryButtons.children[i].className = "memoryButtonNotActive";
+    }
+  } else {
+    for (var i = 0; i < memoryButtons.children.length - 1; i++) {
+      memoryButtons.children[i].className = "memoryButtonDIV";
+    }
+  }
+}
+
+function historyOpenClose() {
+  if (historyList.style.display) {
+    historyList.style.display = "";
+    delHistory.style.display = "";
+  } else {
+    historyList.style.display = "block";
+    delHistory.style.display ="block";
+  }
+}
+
+function memoryOpenClose() {
+  if (memoryList.style.display) {
+    memoryList.style.display = "";
+    delMemory.style.display = "";
+  } else {
+    memoryList.style.display = "block";
+    delMemory.style.display ="block";
+  }
+}
+
+memoryButtonNotActive();
