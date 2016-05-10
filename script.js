@@ -1,9 +1,12 @@
 var x = y = activeOperator = null,
+    historyTextClone,
     delCount = false,
     shiftOperator = false,
     divideByZero = "can't  divide by zero",
     limitText = "Limit is exceeded",
     historyArr = [],
+    memoryArr = [],
+    mr = 0,
     historyList = document.getElementById("historyList"),
     callEqual = false;
     operatorsList = {
@@ -114,16 +117,107 @@ var x = y = activeOperator = null,
           if (answerNumber == 0) {
             answer.innerHTML += ".";
           }
+      },
+
+      madd: function () {
+        if(document.querySelector(".memoryText")) {
+          document.querySelector(".memoryText").remove();
+        }
+
+        var div = document.createElement("div");
+        div.classList.add("memoryElem", "clearfix");
+        div.innerHTML =
+        '<div class="memoryElem clearfix">' +
+            '<span class="memoryAnswer">0</span>' +
+            '<br>' +
+          '<div class="memoryElemButtons">' +
+            '<div class="" data-memory-operator="mce">MC</div>' +
+            '<div class="" data-memory-operator="mpluse">M+</div>' +
+            '<div class="" data-memory-operator="mminuse">M-</div>' +
+          '</div>' +
+        '</div>';
+
+        div.querySelector(".memoryAnswer").innerHTML = answer.innerHTML;
+        memoryList.insertBefore(div, memoryList.firstChild);
+
+        var buttons = div.getElementsByTagName("div");
+
+        function mminuse() {
+          div.querySelector('.memoryElem .memoryAnswer').innerHTML =
+            parseFloat(div.querySelector('.memoryElem .memoryAnswer')
+            .innerHTML) - parseFloat(answer.innerHTML);
+          }
+
+        function mpluse() {
+          div.querySelector('.memoryElem .memoryAnswer').innerHTML =
+            parseFloat(answer.innerHTML) + parseFloat(div.querySelector
+              ('.memoryElem .memoryAnswer').innerHTML);
+          }
+
+        function mce() {
+          div.remove();
+        }
+
+        for (var i = 0; i < buttons.length; i++) {
+
+          switch (buttons[i].getAttribute("data-memory-operator")) {
+            case "mce":
+              buttons[i].onclick = mce;
+              break;
+            case "mpluse":
+              buttons[i].onclick = mpluse;
+              break;
+            case "mminuse":
+              buttons[i].onclick = mminuse;
+              break;
+          }
+
+        }
+
+        mr = mr + parseFloat(answer.innerHTML);
+
+        shiftOperator = true;
+      },
+      mc: function () {
+        memoryList.innerHTML = '<div class="memoryText">There\'s no history yet</div>';
+        mr = 0;
+      },
+      mr: function () {
+        answer.innerHTML = mr;
+      },
+      mplus: function () {
+
+        if (memoryList.querySelector(".memoryElem")) {
+          memoryList.querySelector(".memoryElem").querySelector(".memoryAnswer").innerHTML =
+            parseFloat(answer.innerHTML) + parseFloat(memoryList.querySelector(".memoryElem")
+            .querySelector(".memoryAnswer").innerHTML);
+        } else {
+          operatorsList.madd();
+        }
+      },
+      mminus: function () {
+
+        if (memoryList.querySelector(".memoryElem")) {
+          memoryList.querySelector(".memoryElem").querySelector(".memoryAnswer").innerHTML =
+            parseFloat(memoryList.querySelector(".memoryElem")
+            .querySelector(".memoryAnswer").innerHTML) - parseFloat(answer.innerHTML);
+        } else {
+          operatorsList.madd();
+        }
       }
     },
     sortingObj = {
+      dataMemoryOperator: function (name) {
+        if (typeof operatorsList[name] === "function") {
+          operatorsList[name]();
+        }
+      },
       dataOperator: function (name, x1, y1) {
         if (typeof operatorsList[name] === "function") {
 
           if (solveString.innerHTML) {
             addSolveString(" " + y1);
           }
-
 
           var answerNumber = operatorsList[name](x1, y1);
 
@@ -247,6 +341,16 @@ var x = y = activeOperator = null,
     function createHistoryElem() {
       var text;
 
+      if (historyList.querySelector(".historyText")) {
+        historyTextClone = historyList.querySelector(".historyText").cloneNode(false);
+        historyTextClone.innerHTML = historyList.querySelector(".historyText").innerHTML;
+        historyList.querySelector(".historyText").remove();
+      }
+
+      if (!delHistoryButton.style.display) {
+        delHistoryButton.style.display = "block";
+      }
+
       console.log(solveString.innerHTML)
 
       if (solveString.innerHTML) {
@@ -357,6 +461,11 @@ function animationButton(id) {
 window.onclick = function (e) {
   var target = e.target;
 
+  if (target.hasAttribute("data-memory-operator")) {
+    sortingObj.dataMemoryOperator(target.getAttribute("data-memory-operator"));
+    return false;
+  }
+
   if (target.classList.contains("historyElem")) {
 
     nextActivOperator = delCount = null;
@@ -374,8 +483,18 @@ window.onclick = function (e) {
   }
 
   if (target == delHistoryButton) {
+    delHistoryButton.style.display = "";
     historyList.innerHTML = "";
+    historyList.appendChild(historyTextClone);
     historyArr = [];
+    return false;
+  }
+
+  if (target == delHistoryButton) {
+    delMemoryButton.style.display = "";
+    memoryList.innerHTML = "";
+    memoryList.appendChild(memoryTextClone);
+    memoryArr = [];
     return false;
   }
 
@@ -386,6 +505,16 @@ window.onclick = function (e) {
     } else {
       historyList.style.display = "block";
       delHistory.style.display ="block";
+    }
+  }
+
+  if (target.getAttribute("id") == "openMemory") {
+    if (memoryList.style.display) {
+      memoryList.style.display = "";
+      delMemory.style.display = "";
+    } else {
+      memoryList.style.display = "block";
+      delMemory.style.display ="block";
     }
   }
 

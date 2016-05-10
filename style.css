@@ -63,6 +63,7 @@
 #delHistoryButton.historyButton {
   font-size: xx-large;
   line-height: 35px;
+  display: none;
 }
 
 #delHistoryButton.historyButton:hover {
@@ -70,6 +71,20 @@
 }
 
 #delHistoryButton.historyButton:active {
+  background-color: #B0B0B0;
+}
+
+#delMemoryButton.historyButton {
+  font-size: xx-large;
+  line-height: 35px;
+  display: none;
+}
+
+#delMemoryButton.historyButton:hover {
+  background-color: #C6C6C6;
+}
+
+#delMemoryButton.historyButton:active {
   background-color: #B0B0B0;
 }
 
@@ -93,7 +108,7 @@
 
 #historyList {
   width: 320px;
-  height: 200px;
+  height: 250px;
   position: absolute;
   background-color: #DCDCDC;
   bottom: 50px;
@@ -101,7 +116,42 @@
   overflow: auto;
 }
 
+#memoryList {
+  width: 320px;
+  height: 250px;
+  position: absolute;
+  background-color: #DCDCDC;
+  bottom: 50px;
+  display: none;
+  overflow: auto;
+}
+
+.historyText {
+  top: 0;
+  position: absolute;
+  padding: 20px;
+  color: #B0B0B0;
+}
+
+.memoryText {
+  top: 0;
+  position: absolute;
+  padding: 20px;
+  color: #B0B0B0;
+}
+
 #delHistory {
+  width: 320px;
+  height: 50px;
+  position: absolute;
+  background-color: #DCDCDC;
+  bottom: 0;
+  vertical-align: bottom;
+  display: none;
+  overflow: auto;
+}
+
+#delMemory {
   width: 320px;
   height: 50px;
   position: absolute;
@@ -147,6 +197,18 @@
 }
 
 .historyElem:active {
+  background-color: #B0B0B0;
+}
+
+.memoryElem {
+  margin: 10px 0 10px 0;
+}
+
+.memoryElem:hover {
+  background-color: #C6C6C6;
+}
+
+.memoryElem:active {
   background-color: #B0B0B0;
 }
 
@@ -222,6 +284,61 @@ span.solveString {
   float: left;
 }
 
+.addytionallyButton DIV {
+  float: left;
+  width: 80px;
+  height: 50px;
+  text-align: center;
+  background-color: #F2F2F2;
+  line-height: 50px;
+  font-size: large;
+  border-top: 1px solid #DADADA;
+}
+
+.addytionallyButton DIV:hover {
+  background-color: #CFCFCF;
+}
+
+.addytionallyButton DIV:active {
+  background-color: #B8B8B8;
+}
+
+.addytionallyButton {
+  clear: left;
+  float: left;
+}
+
+.separetor {
+  clear: left;
+  float: left;
+  width: 320px;
+  height: 10px
+}
+
+.memoryButton DIV {
+  float: left;
+  width: 16.66%;
+  height: 25px;
+  text-align: center;
+  background-color: #F2F2F2;
+  line-height: 25px;
+  font-size: small;
+}
+
+.memoryButton DIV:hover {
+  background-color: #CFCFCF;
+}
+
+.memoryButton DIV:active {
+  background-color: #B8B8B8;
+}
+
+.memoryButton {
+  clear: left;
+  float: left;
+  width: 320px;
+}
+
 .historyMemory {
   display: inline-block;
   padding: 0;
@@ -241,4 +358,37 @@ span.solveString {
   font-size: small;
   line-height: 20px;
   margin: 0 5px
+}
+
+.memoryAnswer {
+  font-size: x-large;
+  margin: 10px;
+  float: right;
+  font-weight: bold;
+}
+
+.memoryElemButtons {
+  float: right;
+  clear: right;
+}
+
+.memoryElemButtons DIV {
+  float: right;
+  height: 30px;
+  width: 30px;
+  color: #0099BC;
+  font-weight: bold;
+  font-size: small;
+  text-align: center;
+  line-height: 30px;
+}
+
+.memoryElemButtons DIV:hover {
+  color: #0C0C0C;
+  background-color: #B3B3B3;
+}
+
+.memoryElemButtons DIV:active {
+  color: #0C0C0C;
+  background-color: #9E9E9E;
 }

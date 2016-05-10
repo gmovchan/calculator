@@ -20,6 +20,21 @@
         <div id="solveString" class="solveString"></div>
         <div id="answer" class="answer">0</div>
         <br>
+        <div class="separetor"></div>
+        <div class="memoryButton">
+          <div data-memory-operator="mc">MC</div>
+          <div data-memory-operator="mr">MR</div>
+          <div data-memory-operator="mplus">M+</div>
+          <div data-memory-operator="mminus">M-</div>
+          <div data-memory-operator="madd">MS</div>
+          <div id="openMemory">M</div>
+        </div>
+        <div class="addytionallyButton">
+          <div >%</div>
+          <div >Корень</div>
+          <div >x^2</div>
+          <div >1/x</div>
+        </div>
         <div class="row">
           <div id="ce" strings-operator="ce">CE</div>
           <div id="c" strings-operator="c">C</div>
@@ -51,10 +66,17 @@
           <div data-operator="equal" id="equal">=</div>
         </div>
 
-      <div id="historyList" class=""></div>
-      <div id="delHistory">
-        <div id="delHistoryButton" class="historyButton">␡</div>
-      </div>
+        <div id="historyList" class=""><div class="historyText">There's nothing saved in memory</div></div>
+        <div id="delHistory">
+          <div id="delHistoryButton" class="historyButton">␡</div>
+        </div>
+
+        <div id="memoryList" class="">
+          <div class="memoryText">There's no history yet</div>
+        </div>
+        <div id="delMemory">
+          <div id="delMemoryButton" class="historyButton">␡</div>
+        </div>
       </div>
 <!--      <div class="historyMemory">
         There nothing saved in memory
