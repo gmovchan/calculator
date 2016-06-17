@@ -1,4 +1,4 @@
-var x = y = activeOperator = null,
+var x = y = activeOperator = sqrX = null,
     historyTextClone,
     delCount = false,
     shiftOperator = false,
@@ -19,6 +19,64 @@ var x = y = activeOperator = null,
 
       plus: function (x, y) {
         return x + y;
+      },
+
+      sqrt: function () {
+        var x = parseFloat(answer.innerHTML);
+        addSolveString(" " + "√(" + x + ")");
+        x = Math.sqrt(x);
+        x = maxXLength(x);
+        answer.innerHTML = x;
+      },
+
+      sqr: function () {
+        var x = parseFloat(answer.innerHTML);
+
+        x = Math.pow(x, 2);
+        x = maxXLength(x);
+        answer.innerHTML = x;
+        if (sqrX) {
+          x = "sqr(" + sqrX + ")";
+          sqrX = x;
+        } else {
+          x = "sqr(" + x + ")";
+          sqrX = x;
+        }
+
+        if (x.length > 34) {
+          x = "..." + x.substring(x.length - 34);
+        }
+
+        solveString.innerHTML = " " + x;
+      },
+
+      oneDividedX: function () {
+        var x = parseFloat(answer.innerHTML);
+
+        if (x === 0) {
+          x = divideByZero;
+          addSolveString(" " + "1/(0)");
+          answer.innerHTML = x;
+          return false;
+        }
+
+        addSolveString(" " + "1/(" + x + ")");
+        x = 1 / x;
+        x = maxXLength(x);
+        console.log(x);
+        answer.innerHTML = x;
+      },
+
+      percent: function () {
+        y = parseFloat(answer.innerHTML);
+        if (!x) {
+          answer.innerHTML = 0;
+          solveString.innerHTML = 0;
+          return false;
+        }
+        var percent = (x * y) / 100
+        answer.innerHTML = percent;
+        addSolveString(" " + percent);
       },
 
       division: function (x, y) {
@@ -127,15 +185,13 @@ var x = y = activeOperator = null,
         var div = document.createElement("div");
         div.classList.add("memoryElem", "clearfix");
         div.innerHTML =
-        '<div class="memoryElem clearfix">' +
             '<span class="memoryAnswer">0</span>' +
             '<br>' +
           '<div class="memoryElemButtons">' +
             '<div class="" data-memory-operator="mce">MC</div>' +
             '<div class="" data-memory-operator="mpluse">M+</div>' +
             '<div class="" data-memory-operator="mminuse">M-</div>' +
-          '</div>' +
-        '</div>';
+          '</div>';
 
         div.querySelector(".memoryAnswer").innerHTML = answer.innerHTML;
         memoryList.insertBefore(div, memoryList.firstChild);
@@ -218,7 +274,7 @@ var x = y = activeOperator = null,
       }
     },
     sortingObj = {
-      dataMemoryOperator: function (name) {
+      simpleOperator: function (name) {
         if (typeof operatorsList[name] === "function") {
           operatorsList[name]();
         }
@@ -449,6 +505,10 @@ var x = y = activeOperator = null,
     }
 
 function addSolveString(text) {
+  if (solveString.innerHTML == 0) {
+    solveString.innerHTML = "";
+  }
+
   if (answer.innerHTML == "Limit is exceeded") {
     return false;
   }
@@ -472,8 +532,18 @@ function animationButton(id) {
 window.onclick = function (e) {
   var target = e.target;
 
+  if (target.classList.contains("memoryElem")) {
+    answer.innerHTML = target.getElementsByClassName('memoryAnswer')[0].innerHTML;
+    return false;
+  }
+
   if (target.hasAttribute("data-memory-operator")) {
-    sortingObj.dataMemoryOperator(target.getAttribute("data-memory-operator"));
+    sortingObj.simpleOperator(target.getAttribute("data-memory-operator"));
+    return false;
+  }
+
+  if (target.hasAttribute("data-addytionally-operator")) {
+    sortingObj.simpleOperator(target.getAttribute("data-addytionally-operator"));
     return false;
   }
 
@@ -587,10 +657,10 @@ window.onclick = function (e) {
 window.onkeydown = function (e) {
   sortingObj.keyPress(e.keyCode);
 };
-
+/*
 var addytionallyButtons = document.querySelector(".addytionallyButton");
 addytionallyButtons.className = "addytionallyButtonNotActive";
-
+*/
 var memoryButtons = document.getElementsByClassName("memoryButton")[0];
 
 function memoryButtonNotActive() {
@@ -603,11 +673,11 @@ function memoryButtonNotActive() {
   }
 
   if (memoryList.style.display == "block") {
-    for (var i = 0; i < memoryButtons.children.length - 1; i++) {
+    for (var i = 0; i < 5; i++) {
       memoryButtons.children[i].className = "memoryButtonNotActive";
     }
   } else {
-    for (var i = 0; i < memoryButtons.children.length - 1; i++) {
+    for (var i = 0; i < 5; i++) {
       memoryButtons.children[i].className = "memoryButtonDIV";
     }
   }
@@ -631,6 +701,14 @@ function memoryOpenClose() {
     memoryList.style.display = "block";
     delMemory.style.display ="block";
   }
+}
+
+function maxXLength(x) {
+  x = x.toString();
+  if (x.length > 15) {
+    x = parseFloat(x).toExponential(9);
+  }
+  return x;
 }
 
 memoryButtonNotActive();
